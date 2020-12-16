@@ -4,17 +4,17 @@ require("dotenv/config");
 
 const app = express();
 
+//Server port
 const port = process.env.PORT || 5000;
 
-// server port
-app.get("/", (req, res) => {
-    res.send("HELLO WORD!");
-});
+//Routes 
+const postRouter = require("./routes/posts")
 
-// Middlewares
-app.use(express.json());
+//Middlewares
+app.use(express.json())
+app.use('/post', postRouter)
 
-// Database connection
+//Database connection
 mongoose
     .connect(process.env.DB_CONNECTION, {
         useNewUrlParser: true,
@@ -23,5 +23,5 @@ mongoose
     .then(() => console.log("DB Connected "))
     .catch((err) => console.log(err));
 
-// server connection
+//Server connection
 app.listen(port, () => console.log(`app running successfully in the port ${port}`));
